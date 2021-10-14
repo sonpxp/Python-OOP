@@ -16,15 +16,24 @@ class Item:
         return self.price * self.quality
 
     def apply_discount(self):
-        self.price = self.price * Item.pay_rate
+        self.price = self.price * self.pay_rate  # Item.pay_rate
 
 
 item1 = Item("Phone", 100, 5)
-item2 = Item("Laptop", 1000, 4)
+item1.apply_discount()
+print(item1.price)
 
-print(Item.__dict__) # All the attributes for class level
-print(item1.__dict__) # All the attributes for instance level
-print(item2.__dict__)
+item2 = Item("Phone", 300, 2)
+item2.pay_rate = 0.5  # self.pay_rate
+item2.apply_discount()
+print(item2.price)
+
+# item1 = Item("Phone", 100, 5)
+# item2 = Item("Laptop", 1000, 4)
+#
+# print(Item.__dict__) # All the attributes for class level
+# print(item1.__dict__) # All the attributes for instance level
+# print(item2.__dict__)
 
 # print(item1.calculator_total_price())
 # print(item2.calculator_total_price())
@@ -36,4 +45,3 @@ print(item2.__dict__)
 # print(item2.name)
 # print(item2.price)
 # print(item2.quality)
-
