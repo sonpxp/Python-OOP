@@ -1,6 +1,6 @@
 import csv
 
-"""
+
 class Item:
     # can set default = 0 ex: quality = 0
     pay_rate = 0.8
@@ -12,12 +12,26 @@ class Item:
         assert quantity >= 0, f"quality {quantity} is not greater than or equal to zero!"
 
         # assert to self object
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
 
         # Actions to execute
         Item.all.append(self)
+
+    @property
+    # Property Decorator = Read-only Attribute
+    def name(self):
+        # print("You are trying to get name") ...
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        # print("You are trying to set name")
+        if len(value) > 10:
+            raise Exception("The name is too long!")
+        else:
+            self.__name = value
 
     def calculator_total_price(self):
         return self.price * self.quantity
@@ -53,37 +67,3 @@ class Item:
 
     def __repr__(self):
         return f"{self.__class__.__name__} '{self.name}, {self.price}, {self.quantity}'"
-
-
-# Item.instantiate_from_csv()
-# print()
-# print(Item.all)
-
-# print(Item.is_integer(5.9))
-
-
-class Phone(Item):
-    # all = []
-
-    def __init__(self, name: str, price: float, quantity: int, broken_phones=0):
-        # Call to super function to have access to attribute / method
-        super().__init__(name, price, quantity)
-
-        # run validations to the received arguments
-        assert broken_phones >= 0, f"broken hones {broken_phones} is not greater than or equal to zero!"
-
-        # assert to self object
-        self.broken_phones = broken_phones
-
-        # Actions to execute
-        # Phone.all.append(self)
-
-
-phone1 = Phone("IPhone11", 500, 3, 1)
-# print(phone1.calculator_total_price())
-# phone2 = Phone("IPhone12", 700, 5, 1)
-
-print(Item.all)
-# print(Phone.all)
-
-"""
