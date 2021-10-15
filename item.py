@@ -6,18 +6,29 @@ class Item:
     pay_rate = 0.8
     all = []
 
-    def __init__(self, name: str, price: float, quantity: int):
+    def __init__(self, name: str, price: float, quantity=0):
         # run validations to the received arguments
         assert price >= 0, f"Price {price} is not greater than or equal to zero!"
         assert quantity >= 0, f"quality {quantity} is not greater than or equal to zero!"
 
         # assert to self object
         self.__name = name
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
         # Actions to execute
         Item.all.append(self)
+
+    @property
+    # Property Decorator = Read-only Attribute
+    def price(self):
+        return self.__price
+
+    def apply_discount(self):
+        self.__price = self.__price * self.pay_rate  # Item.pay_rate
+
+    def apply_increment(self, increment_value):
+        self.__price = self.__price + self.__price * increment_value
 
     @property
     # Property Decorator = Read-only Attribute
@@ -33,11 +44,12 @@ class Item:
         else:
             self.__name = value
 
-    def calculator_total_price(self):
-        return self.price * self.quantity
+    @price.setter
+    def price(self, value):
+        self.__price = value
 
-    def apply_discount(self):
-        self.price = self.price * self.pay_rate  # Item.pay_rate
+    def calculator_total_price(self):
+        return self.__price * self.quantity
 
     @classmethod
     def instantiate_from_csv(cls):
